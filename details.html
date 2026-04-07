@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Details & Apply</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; padding: 50px; }
+        .card { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .apply-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
+        input, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #ddd; box-sizing: border-box; }
+        button { background: #00b894; color: white; border: none; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <a href="index.html" style="color: #636e72; text-decoration: none;">← Back to Job Board</a>
+        <h1 id="title">Loading...</h1>
+        <p id="desc"></p>
+        <p><strong>Required Skills:</strong> Systems Architecture, API Integration, Postgres, JavaScript</p>
+
+        <div class="apply-section">
+            <h3>Apply for this position</h3>
+            <input type="text" placeholder="Full Name">
+            <input type="email" placeholder="Email Address">
+            <label>Upload Resume (PDF):</label>
+            <input type="file" id="resumeFile" accept=".pdf">
+            <button onclick="handleApply()">Submit Application</button>
+        </div>
+    </div>
+
+    <script>
+        const jobs = [
+            { id: 1, position: "System Architect", description: "Design systems for scalability and high performance." },
+            { id: 2, position: "Integration Specialist", description: "Implement middleware and data pipelines." },
+            { id: 3, position: "Software Engineer", description: "Build full-stack applications using Next.js." }
+        ];
+
+        const id = new URLSearchParams(window.location.search).get('id');
+        const selectedJob = jobs.find(j => j.id == id);
+
+        if (selectedJob) {
+            document.getElementById('title').innerText = selectedJob.position;
+            document.getElementById('desc').innerText = selectedJob.description;
+        } else {
+            window.location.href = "index.html";
+        }
+
+        function handleApply() {
+            const file = document.getElementById('resumeFile').files[0];
+            if (!file) {
+                alert("Please select a file to upload.");
+                return;
+            }
+            alert(`Success! File "${file.name}" simulated upload to Dropbox. Application sent!`);
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

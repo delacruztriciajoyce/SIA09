@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Web-Based CV</title>
+    <script async crossorigin="anonymous" src="https://clerk.your-app.com/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+    <style>
+        body { font-family: 'Georgia', serif; background: #dfe6e9; padding: 40px; }
+        .cv-paper { max-width: 800px; margin: auto; background: white; padding: 50px; min-height: 1000px; box-shadow: 0 0 20px rgba(0,0,0,0.2); }
+        .auth-container { text-align: center; margin-top: 100px; }
+        h1 { border-bottom: 3px solid #2d3436; padding-bottom: 10px; text-transform: uppercase; }
+        .section-title { font-weight: bold; background: #f1f2f6; padding: 5px 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div id="clerk-app"></div>
+
+    <script>
+        window.addEventListener('load', async function () {
+            // Replace with your actual Clerk Publishable Key
+            const clerk_pub_key = "pk_test_Y2xlcmsuYXVmLmVkdS5waCQ"; 
+
+            await Clerk.load({ publishableKey: clerk_pub_key });
+
+            const appDiv = document.getElementById('clerk-app');
+
+            if (Clerk.user) {
+                // CONTENT SHOWN ONLY IF LOGGED IN
+                appDiv.innerHTML = `
+                    <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 20px;">
+                        <a href="index.html">← Back to Jobs</a>
+                        <div id="user-button"></div>
+                    </div>
+                    <div class="cv-paper">
+                        <h1>${Clerk.user.fullName}</h1>
+                        <p>${Clerk.user.primaryEmailAddress.emailAddress} | Angeles City, PH</p>
+                        
+                        <div class="section-title">PROFESSIONAL SUMMARY</div>
+                        <p>Dedicated developer with experience in systems integration and cloud services.</p>
+                        
+                        <div class="section-title">EDUCATION</div>
+                        <p><strong>Angeles University Foundation</strong><br>Bachelor of Science in Information Technology</p>
+                        
+                        <div class="section-title">TECHNICAL SKILLS</div>
+                        <ul>
+                            <li>Backend: Supabase, Node.js</li>
+                            <li>Frontend: Next.js, HTML/CSS/JS</li>
+                            <li>Services: Clerk Auth, Dropbox API</li>
+                        </ul>
+                    </div>
+                `;
+                Clerk.mountUserButton(document.getElementById('user-button'));
+            } else {
+                // CONTENT SHOWN IF LOGGED OUT
+                appDiv.innerHTML = `
+                    <div class="auth-container">
+                        <h1>Access Restricted</h1>
+                        <p>Please sign in to view your Web-Based CV.</p>
+                        <div id="sign-in-ui" style="display:inline-block; margin-top:20px;"></div>
+                    </div>
+                `;
+                Clerk.mountSignIn(document.getElementById('sign-in-ui'));
+            }
+        });
+    </script>
+</body>
+</html>

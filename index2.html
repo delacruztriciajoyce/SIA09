@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal | AUF SIA01</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px; }
+        .container { max-width: 900px; margin: auto; }
+        header { border-bottom: 2px solid #e9ecef; margin-bottom: 30px; padding-bottom: 10px; display: flex; justify-content: space-between; }
+        .job-grid { display: grid; gap: 20px; }
+        .job-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .job-title { color: #2d3436; margin-top: 0; font-size: 1.5rem; }
+        .salary { color: #27ae60; font-weight: bold; }
+        .btn { background: #0984e3; color: white; padding: 10px 18px; text-decoration: none; border-radius: 5px; display: inline-block; transition: 0.3s; }
+        .btn:hover { background: #74b9ff; }
+        .nav-link { text-decoration: none; color: #636e72; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Available Jobs</h1>
+            <nav><a href="cv.html" class="nav-link">My Web CV (Protected)</a></nav>
+        </header>
+
+        <div id="jobs-list" class="job-grid">
+            </div>
+    </div>
+
+    <script>
+        // Faked Supabase Data matching your screenshot
+        const fakeJobs = [
+            { id: 1, position: "System Architect", description: "Responsible for designing and structuring complex systems.", salary: "30,000" },
+            { id: 2, position: "Integration Specialist", description: "Responsible for connecting different systems and APIs.", salary: "40,000" },
+            { id: 3, position: "Software Engineer", description: "Designing, developing, and testing software solutions.", salary: "90,000" }
+        ];
+
+        const container = document.getElementById('jobs-list');
+        container.innerHTML = fakeJobs.map(job => `
+            <div class="job-card">
+                <h2 class="job-title">${job.position}</h2>
+                <p>${job.description}</p>
+                <p class="salary">₱${job.salary}</p>
+                <a href="details.html?id=${job.id}" class="btn">View Details & Apply</a>
+            </div>
+        `).join('');
+    </script>
+</body>
+</html>
